@@ -4,12 +4,11 @@ echo "What's your region"
 read Region
 echo "Specify Service Name"
 read Service
-InstanceId="i-041057f9fade3a43f"
 while :
 do
-aws ec2 describe-instances --query 'Reservations[].Instances[].[InstanceId,State.Name,Tags[?Key==`Name`].Value[]]' --region $Region --output text
-echo "Select instance id to change its state"
-read InstanceId
+aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table
+read -p "Select instance id to change its state or -1 to exit: "  InstanceId
+
 if [[ $InstanceId == "-1" ]]
  then
     break
