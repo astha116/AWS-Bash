@@ -7,7 +7,7 @@ read Service
 while :
 do
 aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table
-read -p "Select instance id to change its state or -1 to exit: "  InstanceId
+read -p "Enter space separated instanceids or -1 to exit: "  InstanceId
 
 if [[ $InstanceId == "-1" ]]
  then
