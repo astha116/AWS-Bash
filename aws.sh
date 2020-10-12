@@ -2,20 +2,23 @@
 
 echo "What's your region"
 read Region
-echo "Specify Service Name"
-read Service
+# echo "Specify Service Name"
+# read Service
 while :
 do
 aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table
-read -p "Enter space separated instanceids or -1 to exit: "  InstanceId
-
-if [[ $InstanceId == "-1" ]]
+echo -e "1.Enter space separated instanceids\n2.-1 to exit\n3.0 to main menu" 
+read InstanceId
+if [[ $InstanceId == "0" ]]
+then
+bash main.sh
+elif [[ $InstanceId == "-1" ]]
  then
     break
 fi
+
 for i in $InstanceId
 do
-echo $i
 var=$(aws ec2 describe-instances --instance-ids $i --query 'Reservations[].Instances[].[State.Name]' --output text)
 if [[ $var == "running" ]]
 then
