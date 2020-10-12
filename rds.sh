@@ -5,7 +5,7 @@ read Region
 while :
 do
 aws rds describe-db-instances --query 'DBInstances[].{Name: DBInstanceIdentifier, State: DBInstanceStatus}' --region $Region --output table
-echo -e "1.Enter DB Instance Intentifier \n2.-1 to exit \n3.0 to main menu"
+echo -e "1.Enter space separated DB Instance Intentifier \n2.-1 to exit \n3.0 to main menu"
 read DbInstanceIdentifier
 if [[ $DbInstanceIdentifier == "0" ]]
 then
