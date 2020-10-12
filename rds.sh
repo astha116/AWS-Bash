@@ -16,15 +16,15 @@ elif [[ $DbInstanceIdentifier == "-1" ]]
 fi
 for i in $DbInstanceIdentifier
 do
-rdsvar=$(aws rds describe-db-instances --db-instance-identifier $DbInstanceIdentifier --query 'DBInstances[].[DBInstanceStatus]|[0]' --output text)
+rdsvar=$(aws rds describe-db-instances --db-instance-identifier $i --query 'DBInstances[].[DBInstanceStatus]|[0]' --output text)
 if [[ $rdsvar == "available" ]]
 then
 echo "Stopping"
-aws rds stop-db-instance --db-instance-identifier $DbInstanceIdentifier > /dev/null
+aws rds stop-db-instance --db-instance-identifier $i > /dev/null
 elif [[ $rdsvar == "stopped" ]]
 then
 echo "Starting"
-aws rds start-db-instance --db-instance-identifier $DbInstanceIdentifier > /dev/null
+aws rds start-db-instance --db-instance-identifier $i > /dev/null
 else
 echo "its in pending state"
 fi
