@@ -2,8 +2,6 @@
 
 echo "What's your region"
 read Region
-# echo "Specify Service Name"
-# read Service
 while :
 do
 aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table

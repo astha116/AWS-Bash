@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "What's your region?"
 read Region
 while :
@@ -15,7 +17,6 @@ fi
 for i in $DbInstanceIdentifier
 do
 rdsvar=$(aws rds describe-db-instances --db-instance-identifier $DbInstanceIdentifier --query 'DBInstances[].[DBInstanceStatus]|[0]' --output text)
-echo "heloo=========$rdsvar"
 if [[ $rdsvar == "available" ]]
 then
 echo "Stopping"
